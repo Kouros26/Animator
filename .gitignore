@@ -1,24 +1,70 @@
-# Prerequisites
-*.d
+# Build -----------------------------------------------------------------------
 
+### Output and Cache Directories ###
+/External/
+/Docs/
+
+/[Bb]uild/
+/[Bb]uilds/
+/bin/
+/out/
+/cmake-build-*/
+
+# We want to version DLL as they are sometimes pre-deployed in isart projects
+# So we need to ignore everything in deployment folders except DLLs
+/Debug/*
+/Release/*
+/x64/*
+!*.dll
+
+# Exclude a bunch of other temporary directories
+*/x64
+*/Debug/
+*/Release/
+
+# Don't forget this or deployed DLLs won't be seen by Git
+!/x64/*
+!/Debug/*
+!/Release/*
+
+.vs
+.vscode
+
+### CMake ###
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+# Language --------------------------------------------------------------------
+
+### C++ ###
 # Compiled Object files
 *.slo
 *.lo
 *.o
-*.obj
+*.ilk
+*.idb
+*.pdb
+*.ipdb
+*.log
+*.tlog
+*.lastbuildstate
+*.recipe
+*.vcxproj.FileListAbsolute.txt
 
-# Precompiled Headers
-*.gch
-*.pch
+# Comment this line if you want to version Wavefront .obj files.
+*.iobj
 
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
+
 
 # Fortran module files
 *.mod
-*.smod
 
 # Compiled Static libraries
 *.lai
@@ -26,7 +72,14 @@
 *.a
 *.lib
 
+# Don't ignore the libs vendored in the application !
+!Dependencies/**/*.lib
+!Dependencies/**/*.dll
+!Dependencies/**/*.so
+
 # Executables
 *.exe
 *.out
 *.app
+/Resources/Engine/appicon.aps
+/Resources/Scenes/default.chad
