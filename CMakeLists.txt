@@ -7,6 +7,7 @@ set(PROJECT_NAME Engine)
 set(SOURCE_FOLDER src)
 set(INCLUDE_FOLDER include)
 set(DEPENDS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
+add_definitions(-DPROJECT_PATH="${CMAKE_CURRENT_SOURCE_DIR}/")
 
 
 project(${PROJECT_NAME} LANGUAGES CXX)

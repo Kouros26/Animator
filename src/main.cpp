@@ -1,6 +1,11 @@
-#include "window.hpp"
+#include "application.hpp"
 
 int main()
 {
-	Window window;
+	const Application app;
+
+	while (!app.ShouldClose())
+	{
+		app.Render();
+	}
 }
