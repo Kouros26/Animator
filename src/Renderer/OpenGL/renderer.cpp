@@ -1,9 +1,8 @@
 #include "Renderer/OpenGL/renderer.hpp"
 
-#include <cassert>
 #include <iostream>
 #include <glad/glad.h>
-#include "shader.hpp"
+#include "Renderer/OpenGL/shader.hpp"
 
 Renderer::Renderer()
 {
@@ -12,20 +11,20 @@ Renderer::Renderer()
 	LinkAttributes();
 }
 
-void Renderer::Render() const
-{
-	glUseProgram(shaderProgram);
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-	glBindVertexArray(0);
-}
-
 Renderer::~Renderer()
 {
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
 	glDeleteProgram(shaderProgram);
+}
+
+void Renderer::Render() const
+{
+	glUseProgram(shaderProgram);
+	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+	glBindVertexArray(0);
 }
 
 void Renderer::GenerateBuffers()
@@ -63,35 +62,31 @@ void Renderer::GenerateBuffers()
 
 void Renderer::CreateShaders()
 {
-	const Shader vertexShader("resources/shaders/vertex.vert");
+	const Shader vertexShader("resources/shaders/vertex.vert", 0);
 
-	const std::string vertexShaderString = vertexShader.GetSource();
-	const char* vertexShaderSource = vertexShaderString.c_str();
-	const unsigned int vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
-	
-	glShaderSource(vertexShaderId, 1, &vertexShaderSource, nullptr);
-	glCompileShader(vertexShaderId);
-
-	const Shader fragmentShader("resources/shaders/frag.frag");
-
-	const std::string fragmentShaderString = fragmentShader.GetSource();
-	const char* fragmentShaderSource = fragmentShaderString.c_str();
-	const unsigned int fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
-
-	glShaderSource(fragmentShaderId, 1, &fragmentShaderSource, nullptr);
-	glCompileShader(fragmentShaderId);
+	const Shader fragmentShader("resources/shaders/frag.frag", 1);
 
 	shaders.push_back(vertexShader);
 	shaders.push_back(fragmentShader);
 
 	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShaderId);
-	glAttachShader(shaderProgram, fragmentShaderId);
+	glAttachShader(shaderProgram, vertexShader.GetId());
+	glAttachShader(shaderProgram, fragmentShader.GetId());
 	glLinkProgram(shaderProgram);
 
+	char infoLog[512]{};
+	int success;
+
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+	if (!success)
+	{
+		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::LINKING\n" << infoLog << std::endl;
+	}
+
 	glUseProgram(shaderProgram);
-	glDeleteShader(vertexShaderId);
-	glDeleteShader(fragmentShaderId);
+	glDeleteShader(vertexShader.GetId());
+	glDeleteShader(fragmentShader.GetId());
 }
 
 void Renderer::LinkAttributes()
@@ -99,4 +94,15 @@ void Renderer::LinkAttributes()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
 		static_cast<void*>(nullptr));
 	glEnableVertexAttribArray(0);
+}
+
+void Renderer::ToggleWireFrame()
+{
+	drawWireFrame = !drawWireFrame;
+	drawWireFrame ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+bool Renderer::GetDrawWireFrame() const
+{
+	return drawWireFrame;
 }

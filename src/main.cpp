@@ -2,7 +2,7 @@
 
 int main()
 {
-	const Application app;
+	Application app;
 
 	while (!app.ShouldClose())
 	{

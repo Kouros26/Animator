@@ -14,13 +14,20 @@ class Renderer
 
 	unsigned int shaderProgram;
 
-	void GenerateBuffers();
-	void CreateShaders();
-	void LinkAttributes();
+	bool drawWireFrame = false;
 
 public:
 	Renderer();
 	~Renderer();
 
 	void Render() const;
+
+	void ToggleWireFrame();
+
+	bool GetDrawWireFrame() const;
+
+private:
+	void GenerateBuffers();
+	void CreateShaders();
+	void LinkAttributes();
 };

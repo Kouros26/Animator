@@ -13,11 +13,11 @@ public:
 	Window();
 	~Window();
 
-	void ProcessInput() const;
-
 	void SwapBuffers() const;
 	void PollEvents() const;
 
 	bool ShouldClose() const;
 	inline static void FrameBufferResizeCallback(GLFWwindow* pWindow, int pWidth, int pHeight);
+
+	GLFWwindow* GetWindow() const;
 };

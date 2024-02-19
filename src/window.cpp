@@ -22,6 +22,11 @@ void Window::FrameBufferResizeCallback(GLFWwindow* pWindow, int pWidth, int pHei
 	glViewport(0, 0, pWidth, pHeight);
 }
 
+GLFWwindow* Window::GetWindow() const
+{
+	return window;
+}
+
 Window::Window()
 {
 	glfwInit();
@@ -51,10 +56,4 @@ Window::Window()
 Window::~Window()
 {
 	glfwTerminate();
-}
-
-void Window::ProcessInput() const
-{
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
 }

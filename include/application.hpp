@@ -13,7 +13,11 @@ public:
 	Application();
 	~Application();
 
-	void Render() const;
+	void Render();
 
 	bool ShouldClose() const;
+
+private:
+
+	void ProcessInput();
 };
