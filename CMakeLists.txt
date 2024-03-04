@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.23 FATAL_ERROR)
 
+include(FetchContent)
+
 set(CMAKE_CXX_STANDARD 20)
 
 set(PROJECT_NAME Engine)
@@ -13,9 +15,9 @@ add_definitions(-DPROJECT_PATH="${CMAKE_CURRENT_SOURCE_DIR}/")
 project(${PROJECT_NAME} LANGUAGES CXX)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 
-
 file(GLOB_RECURSE HEADER_FILES
-${INCLUDE_FOLDER}/*.hpp)
+${INCLUDE_FOLDER}/*.hpp
+${INCLUDE_FOLDER}/*.h)
 
 file(GLOB_RECURSE SOURCE_FILES
 ${SOURCE_FOLDER}/*.cpp
@@ -54,6 +56,16 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDE_FOLDER})
 #Adding GLFW
 add_subdirectory(${DEPENDS_DIR}/GLFW)
 target_link_libraries(${PROJECT_NAME} glfw)
+
+#Adding GLM
+FetchContent_Declare(
+	glm
+	GIT_REPOSITORY	https://github.com/g-truc/glm.git
+)
+
+FetchContent_MakeAvailable(glm)
+
+target_link_libraries(${PROJECT_NAME} glm::glm)
 
 add_subdirectory(Animator)
 

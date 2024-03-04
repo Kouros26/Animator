@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <glad/glad.h>
 
 #include "shader.hpp"
 
@@ -19,6 +18,8 @@ class Renderer
 public:
 	Renderer();
 	~Renderer();
+
+	void Clear() const;
 
 	void Render() const;
 

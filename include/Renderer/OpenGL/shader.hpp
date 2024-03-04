@@ -1,5 +1,5 @@
 #pragma once
-#include "resource.hpp"
+#include "Resources/resource.hpp"
 
 class Shader : public IResource
 {

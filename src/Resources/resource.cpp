@@ -1,7 +1,12 @@
-#include "resource.hpp"
+#include "Resources/resource.hpp"
 
 #include <fstream>
 
+
+//IResource::IResource(const std::string& pPath)
+//{
+//	resourcePath = pPath;
+//}
 
 std::string IResource::ReadFile(const std::string& pPath)
 {
