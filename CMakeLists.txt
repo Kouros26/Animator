@@ -57,6 +57,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDE_FOLDER})
 add_subdirectory(${DEPENDS_DIR}/GLFW)
 target_link_libraries(${PROJECT_NAME} glfw)
 
+#Adding ASSIMP
+add_subdirectory(${DEPENDS_DIR}/ASSIMP)
+target_link_libraries(${PROJECT_NAME} assimp)
+
 #Adding GLM
 FetchContent_Declare(
 	glm

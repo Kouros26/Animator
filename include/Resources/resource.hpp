@@ -7,7 +7,7 @@ protected:
 
 	std::string resourcePath;
 
-	//IResource(const std::string& pPath);
+	IResource(const std::string& pPath);
 
 public:
 

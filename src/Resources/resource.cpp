@@ -2,11 +2,10 @@
 
 #include <fstream>
 
-
-//IResource::IResource(const std::string& pPath)
-//{
-//	resourcePath = pPath;
-//}
+IResource::IResource(const std::string& pPath)
+{
+	resourcePath = pPath;
+}
 
 std::string IResource::ReadFile(const std::string& pPath)
 {

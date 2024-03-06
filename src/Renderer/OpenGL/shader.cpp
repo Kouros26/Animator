@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 
 Shader::Shader(const std::string& pPath, unsigned type)
+	: IResource(pPath)
 {
 	switch (type)
 	{

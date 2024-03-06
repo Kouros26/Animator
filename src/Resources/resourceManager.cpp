@@ -19,6 +19,17 @@ ResourceManager::~ResourceManager()
 //	}
 //}
 
+template <typename T>
+T ResourceManager::Get(const std::string& pPath)
+{
+
+}
+
+template <typename T>
+T ResourceManager::Create(const std::string& pPath)
+{
+}
+
 void ResourceManager::SyncTasks()
 {
 }

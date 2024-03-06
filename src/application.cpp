@@ -2,6 +2,7 @@
 
 Application::Application()
 {
+	gameObjectManager.CreateGameObject("Cube");
 }
 
 Application::~Application()
@@ -17,7 +18,7 @@ void Application::Render()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	renderer.Clear();
-	renderer.Render();
+	renderer.Render(gameObjectManager.GetGameObjects());
 
 	window.SwapBuffers();
 	window.PollEvents();

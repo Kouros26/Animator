@@ -11,7 +11,7 @@
 #include "Resources/resource.hpp"
 
 Texture::Texture(const std::string& pFilePath)
-	//: IResource(pFilePath)
+	: IResource(PROJECT_PATH + pFilePath)
 {
     glGenTextures(1, &Id);
     glBindTexture(GL_TEXTURE_2D, Id);

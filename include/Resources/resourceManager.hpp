@@ -17,6 +17,9 @@ public:
 	void RunTasks();
 	void SyncTasks();
 
+	template<typename T>
+	T Get(const std::string& pPath);
+
 	//static std::unordered_map<std::string, Task>& GetTasks() { return tasks; }
 	//static std::unordered_map<std::string, Task>& GetCompletedTasks() { return completedTasks; }
 	static std::unordered_map<std::string, std::shared_ptr<IResource>>& GetResources() { return resources; }
@@ -29,4 +32,8 @@ private:
 	//static std::unordered_map<std::string, Task> completedTasks;
 
 	static std::unordered_map<std::string, std::shared_ptr<IResource>> resources;
+
+
+	template<typename T>
+	T Create(const std::string& pPath);
 };

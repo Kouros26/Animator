@@ -3,6 +3,8 @@
 
 #include "shader.hpp"
 
+class GameObject;
+
 class Renderer
 {
 	std::vector<Shader> shaders;
@@ -21,7 +23,7 @@ public:
 
 	void Clear() const;
 
-	void Render() const;
+	void Render(const std::vector<GameObject>& objects) const;
 
 	void ToggleWireFrame();
 
