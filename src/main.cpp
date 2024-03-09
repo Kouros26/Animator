@@ -1,4 +1,4 @@
-#include "application.hpp"
+#include "Application/application.hpp"
 
 int main()
 {
@@ -6,6 +6,6 @@ int main()
 
 	while (!app.ShouldClose())
 	{
-		app.Render();
+		app.Update();
 	}
 }

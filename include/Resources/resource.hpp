@@ -7,9 +7,16 @@ protected:
 
 	std::string resourcePath;
 
-	IResource(const std::string& pPath);
-
 public:
 
+	IResource(const std::string& pPath);
+	virtual ~IResource();
+
+	constexpr std::string GetPath() const;
 	static std::string ReadFile(const std::string& pPath);
 };
+
+constexpr std::string IResource::GetPath() const
+{
+	return resourcePath;
+}

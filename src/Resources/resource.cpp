@@ -7,6 +7,10 @@ IResource::IResource(const std::string& pPath)
 	resourcePath = pPath;
 }
 
+IResource::~IResource()
+{
+}
+
 std::string IResource::ReadFile(const std::string& pPath)
 {
 	std::string content{};

@@ -1,9 +1,5 @@
 #include "EngineObjects/transform.hpp"
 
-#define GLM_ENABLE_EXPERIMENTAL 1
-
-#include "glm/gtx/quaternion.hpp"
-
 Transform::Transform()
 {
 }
@@ -16,5 +12,5 @@ glm::mat4 Transform::GetMatrix() const
 
 	const glm::mat4 transformMatrix = translationMatrix * rotationMatrix * scaleMatrix;
 
-    return transformMatrix;
+	return transformMatrix;
 }
