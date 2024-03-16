@@ -1,4 +1,5 @@
 #pragma once
+#include <assert.h>
 #include <iostream>
 #include <memory>
 #include <unordered_map>
@@ -35,11 +36,13 @@ inline std::shared_ptr<T> ResourceManager::Get(const std::string& pPath, Args...
 {
 	if (const auto it = resources.find(pPath); it != resources.end())
 	{
+		assert(not it->second.expired());
 		return std::static_pointer_cast<T>(it->second.lock());
 	}
 
 	auto resource = std::make_shared<T>(pPath, std::forward<Args>(args)...);
 	resources[pPath] = resource;
 
+	assert(not resources[pPath].expired());
 	return resource;
 }

@@ -10,9 +10,9 @@ GameObject::GameObject(const std::string& pName)
 }
 
 GameObject::GameObject(const std::string& pName, const std::string& pPath)
-	: GameObject(pName)
 {
 	model = ResourceManager::Get<Model>(pPath);
+	objectCount++;
 }
 
 GameObject::GameObject(const std::string& pName, const std::string& pPath, const std::string& pTexturePath)

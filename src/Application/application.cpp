@@ -5,7 +5,7 @@ Application::Application()
 	for (int i = 0; i < 1000; i ++)
 	{
 		GameObject& obj = gameObjectManager.CreateGameObject("Cube");
-		obj.GetTransform().SetPosition({ i * 20, 0, 0 });
+		obj.GetTransform().SetPosition({ i * 4, 0, 0 });
 	}
 }
 
