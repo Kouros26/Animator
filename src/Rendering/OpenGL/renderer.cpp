@@ -37,7 +37,7 @@ void Renderer::Render(std::vector<GameObject>& objects, Camera& camera) const
 	for (auto& object : objects)
 	{
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(object.GetTransform().GetMatrix()));
-		object.GetModel()->Draw(shaderProgram);
+		object.GetModel().Draw(shaderProgram);
 	}
 }
 

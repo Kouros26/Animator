@@ -14,7 +14,7 @@ protected:
 	std::string name;
 
 	Transform transform{};
-	std::shared_ptr<Model> model{};
+	Model model{};
 
 public:
 
@@ -23,5 +23,5 @@ public:
 	GameObject(const std::string& pName, const std::string& pPath, const std::string& pTexturePath);
 
 	[[nodiscard]] Transform& GetTransform();
-	[[nodiscard]] std::shared_ptr<Model>& GetModel();
+	[[nodiscard]] Model& GetModel();
 };
