@@ -8,13 +8,20 @@
 #include "glm/vec2.hpp"
 #include "glm/vec3.hpp"
 
+
+
 struct Vertex
 {
+    constexpr static int maxBoneInfluence = 4;
+
     glm::vec3 Position;
     glm::vec3 Normal;
     glm::vec2 TexCoords;
     glm::vec3 Tangent;
     glm::vec3 BiTangent;
+
+    int boneIds[maxBoneInfluence];
+    float weights[maxBoneInfluence];
 };
 
 class Mesh

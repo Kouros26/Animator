@@ -21,6 +21,11 @@ GameObject::GameObject(const std::string& pName, const std::string& pPath, const
 	
 }
 
+void GameObject::CreateAnimator() const
+{
+	*animator = Animator(nullptr);
+}
+
 Transform& GameObject::GetTransform()
 {
 	return transform;
@@ -29,4 +34,9 @@ Transform& GameObject::GetTransform()
 Model& GameObject::GetModel()
 {
 	return model;
+}
+
+Animator*& GameObject::GetAnimator()
+{
+	return animator;
 }

@@ -2,6 +2,7 @@
 #include <memory>
 
 #include "transform.hpp"
+#include "Animation/animator.hpp"
 #include "Resources/model.hpp"
 
 class GameObject
@@ -15,6 +16,7 @@ protected:
 
 	Transform transform{};
 	Model model{};
+	Animator* animator { nullptr };
 
 public:
 
@@ -22,6 +24,9 @@ public:
 	GameObject(const std::string& pName, const std::string& pPath);
 	GameObject(const std::string& pName, const std::string& pPath, const std::string& pTexturePath);
 
+	void CreateAnimator() const;
+
 	[[nodiscard]] Transform& GetTransform();
 	[[nodiscard]] Model& GetModel();
+	[[nodiscard]] Animator*& GetAnimator();
 };

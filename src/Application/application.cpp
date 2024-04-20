@@ -1,12 +1,16 @@
 #include "Application/application.hpp"
 
+#include <filesystem>
+
 Application::Application()
 {
-	for (int i = 0; i < 1000; i ++)
-	{
-		GameObject& obj = gameObjectManager.CreateGameObject("Cube");
-		obj.GetTransform().SetPosition({ i * 4, 0, 0 });
-	}
+	gameObjectManager.CreateGameObject("Cube");
+
+	//GameObject vegas = gameObjectManager.CreateGameObject("Vegas", "resources/models/Big Vegas.fbx");
+	//vegas.CreateAnimator();
+
+	//Animation breakDance(std::string(PROJECT_PATH) + "resources/animations/Flair.fbx", &vegas.GetModel());
+	//vegas.GetAnimator()->PlayAnimation(breakDance);
 }
 
 Application::~Application()
