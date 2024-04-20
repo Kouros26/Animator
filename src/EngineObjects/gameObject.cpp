@@ -5,14 +5,14 @@
 GameObject::GameObject(const std::string& pName)
 	: id(objectCount), name(pName)
 {
-	model = ResourceManager::Get<Model>("resources/models/cube.obj");
+	model = Model("resources/models/cube.obj");
 	objectCount++;
 }
 
 GameObject::GameObject(const std::string& pName, const std::string& pPath)
-	: GameObject(pName)
 {
-	model = ResourceManager::Get<Model>(pPath);
+	model = Model(pPath);
+	objectCount++;
 }
 
 GameObject::GameObject(const std::string& pName, const std::string& pPath, const std::string& pTexturePath)
@@ -26,7 +26,7 @@ Transform& GameObject::GetTransform()
 	return transform;
 }
 
-std::shared_ptr<Model>& GameObject::GetModel()
+Model& GameObject::GetModel()
 {
 	return model;
 }
