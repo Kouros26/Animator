@@ -60,6 +60,8 @@ Window::Window()
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return;
 	}
+
+	uiManager = UIManager(window);
 }
 
 Window::~Window()

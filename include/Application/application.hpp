@@ -3,7 +3,7 @@
 #include "Rendering/OpenGL/renderer.hpp" // Renderer has to be included before window (because of glad.h)
 #include "window.hpp"
 #include "EngineObjects/gameObjectManager.hpp"
-#include "Resources/resourceManager.hpp"
+#include "Animator/morphTargetAnimator.hpp"
 
 class Application
 {
@@ -13,6 +13,8 @@ class Application
 
 	Renderer renderer{ gameObjectManager.GetMainCamera() };
 	Time time;
+
+	MorphTargetAnimator animator{};
 
 public:
 

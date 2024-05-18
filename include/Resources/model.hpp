@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "assimp/material.h"
 #include "assimp/scene.h"
 #include "Rendering/OpenGL/mesh.hpp"
 

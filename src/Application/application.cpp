@@ -1,12 +1,14 @@
 #include "Application/application.hpp"
 
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 Application::Application()
 {
-	for (int i = 0; i < 1000; i ++)
-	{
-		GameObject& obj = gameObjectManager.CreateGameObject("Cube");
-		obj.GetTransform().SetPosition({ i * 4, 0, 0 });
-	}
+	GameObject& obj = gameObjectManager.CreateGameObject("bob", "resources/models/default.fbx");
+	animator = MorphTargetAnimator(obj.GetModel(), "resources/models/Gunan/");
+	window.GetUIManager().SetAnimator(animator);
 }
 
 Application::~Application()
@@ -19,9 +21,18 @@ void Application::Update()
 	renderer.Clear();
 	time.UpdateDeltaTime();
 
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
+
 	ProcessInput(time.GetDeltaTime());
 
 	renderer.Render(gameObjectManager.GetGameObjects(), gameObjectManager.GetMainCamera());
+
+	window.GetUIManager().Draw();
+
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 	window.SwapBuffers();
 	window.PollEvents();
