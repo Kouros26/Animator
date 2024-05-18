@@ -7,13 +7,14 @@
 Application::Application()
 {
 	GameObject& obj = gameObjectManager.CreateGameObject("bob", "resources/models/default.fbx");
-	animator = MorphTargetAnimator(obj.GetModel(), "resources/models/Gunan/");
-	window.GetUIManager().SetAnimator(animator);
+	animator = new MorphTargetAnimator(obj.GetModel());
+	animator->Init("resources/models/Gunan/");
+	window.GetUIManager().SetAnimator(*animator);
 }
 
 Application::~Application()
 {
-
+	delete animator;
 }
 
 void Application::Update()
@@ -27,6 +28,7 @@ void Application::Update()
 
 	ProcessInput(time.GetDeltaTime());
 
+	animator->Update();
 	renderer.Render(gameObjectManager.GetGameObjects(), gameObjectManager.GetMainCamera());
 
 	window.GetUIManager().Draw();

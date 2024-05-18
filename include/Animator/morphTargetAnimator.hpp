@@ -1,23 +1,35 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <Resources/model.hpp>
+#include "EngineObjects/gameObject.hpp"
+
+struct Targets
+{
+	std::string name;
+	Model target;
+
+	Targets(const std::string& name, const Model& target) : name(name), target(target){}
+};
 
 class MorphTargetAnimator
 {
 private:
 
-	Model* model;
+	Model& model;
 
-	std::vector<Model> targets;
+	Model defaultModel;
+	std::vector<Vertex> defaultModelVertices;
+
+	std::vector<Targets> targets;
 	std::vector<float> values;
 
 public:
 
-	MorphTargetAnimator();
-	MorphTargetAnimator(Model& defaultModel, const std::string& targetsFolderPath);
+	MorphTargetAnimator(Model& defaultModel);
+	void Init(const std::string& targetsFolderPath);
 
 	void Update();
 
 	std::vector<float>& GetValues();
+	std::vector<Targets>& GetTargets();
 };

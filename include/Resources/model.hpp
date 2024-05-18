@@ -15,6 +15,8 @@ public:
 
     void Draw(const unsigned shaderProgram) const;
 
+    std::vector<Mesh>& GetMeshes();
+
 private:
 
     std::vector<Mesh> meshes;

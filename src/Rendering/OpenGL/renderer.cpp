@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include <iostream>
 
+#include "../../../dependencies/ASSIMP/code/Common/Win32DebugLogStream.h"
 #include "EngineObjects/gameObject.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "Rendering/OpenGL/shader.hpp"
@@ -36,6 +37,11 @@ void Renderer::Render(std::vector<GameObject>& objects, Camera& camera) const
 
 	for (auto& object : objects)
 	{
+		for (int i = 0; i < object.GetModel().GetMeshes().size(); i++)
+		{
+			object.GetModel().GetMeshes()[i].UpdateMesh();
+		}
+
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(object.GetTransform().GetMatrix()));
 		object.GetModel().Draw(shaderProgram);
 	}

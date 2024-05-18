@@ -25,6 +25,10 @@ public:
 
     void Draw(const unsigned shaderProgram) const;
 
+    void UpdateMesh() const;
+
+    std::vector<Vertex>& GetVertices();
+
 private:
 
     std::vector<Vertex> vertices;

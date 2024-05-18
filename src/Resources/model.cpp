@@ -25,6 +25,11 @@ void Model::Draw(const unsigned shaderProgram) const
     }
 }
 
+std::vector<Mesh>& Model::GetMeshes()
+{
+    return meshes;
+}
+
 void Model::LoadModel()
 {
     Assimp::Importer import;
