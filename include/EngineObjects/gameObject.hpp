@@ -24,6 +24,4 @@ public:
 
 	[[nodiscard]] Transform& GetTransform();
 	[[nodiscard]] Model& GetModel();
-
-	void SetModel(const Model& pModel);
 };
