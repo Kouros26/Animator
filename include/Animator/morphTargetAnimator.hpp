@@ -6,9 +6,9 @@
 struct Targets
 {
 	std::string name;
-	Model target;
+	std::unordered_map<int, glm::vec3> target;
 
-	Targets(const std::string& name, const Model& target) : name(name), target(target){}
+	Targets(const std::string& name, const std::unordered_map<int, glm::vec3>& target) : name(name), target(target){}
 };
 
 class MorphTargetAnimator
