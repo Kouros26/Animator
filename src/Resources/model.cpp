@@ -4,6 +4,8 @@
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 
+#include "assimp/material.h"
+
 Model::Model()
     : IResource("resources/models/cube.obj")
 {
@@ -21,6 +23,11 @@ void Model::Draw(const unsigned shaderProgram) const
     {
 	    mesh.Draw(shaderProgram);
     }
+}
+
+std::vector<Mesh>& Model::GetMeshes()
+{
+    return meshes;
 }
 
 void Model::LoadModel()
@@ -120,17 +127,8 @@ Mesh Model::ProcessMesh(const aiMesh* mesh, const aiScene* scene)
     // normal: texture_normalN
 
 	// 1. diffuse maps
-    std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+    std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "bob.png");
     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-    // 2. specular maps
-    std::vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-    textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-    // 3. normal maps
-    std::vector<Texture> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
-    textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
-    // 4. height maps
-    std::vector<Texture> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
-    textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
     // return a mesh object created from the extracted mesh data
     return { vertices, indices, textures };
@@ -139,14 +137,9 @@ Mesh Model::ProcessMesh(const aiMesh* mesh, const aiScene* scene)
 std::vector<Texture> Model::LoadMaterialTextures(const aiMaterial* mat, const aiTextureType type, const std::string& name)
 {
     std::vector<Texture> textures;
-    for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
-    {
-        aiString str;
-        mat->GetTexture(type, i, &str);
-        std::string path = "resources/textures/" + std::string(str.C_Str());
-        Texture texture(path);
+    std::string path = "resources/textures/" + name;
+    Texture texture(path);
 
-        textures.push_back(texture);
-    }
+    textures.push_back(texture);
     return textures;
 }

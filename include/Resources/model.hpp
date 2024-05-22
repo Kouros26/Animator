@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "assimp/material.h"
 #include "assimp/scene.h"
 #include "Rendering/OpenGL/mesh.hpp"
 
@@ -13,6 +14,8 @@ public:
     Model(const std::string& pPath);
 
     void Draw(const unsigned shaderProgram) const;
+
+    std::vector<Mesh>& GetMeshes();
 
 private:
 

@@ -3,11 +3,15 @@
 #include "GLFW/glfw3.h"
 #include <glm/glm.hpp>
 
+#include "UI/uiManager.hpp"
+
 class Window
 {
 	GLFWwindow* window;
 
 	int width = 800, height = 600;
+
+	UIManager uiManager;
 
 	constexpr void SetWindowSize(int pWidth, int pHeight);
 
@@ -27,10 +31,16 @@ public:
 
 	[[nodiscard]] GLFWwindow* GetWindow() const;
 	[[nodiscard]] constexpr glm::vec2 GetWindowSize() const;
+	[[nodiscard]] constexpr UIManager& GetUIManager();
 };
 
 constexpr void Window::SetWindowSize(int pWidth, int pHeight)
 {
 	width = pWidth;
 	height = pHeight;
+}
+
+constexpr UIManager& Window::GetUIManager()
+{
+	return uiManager;
 }

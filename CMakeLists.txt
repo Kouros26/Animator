@@ -69,11 +69,14 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(glm)
 
+#Adding IMGUI
+file(GLOB_RECURSE IMGUI_SOURCES ${DEPENDS_DIR}/IMGUI/*.cpp ${DEPENDS_DIR}/IMGUI/*.h)
+add_library(ImGui STATIC ${IMGUI_SOURCES})
+target_include_directories(ImGui PUBLIC ${DEPENDS_DIR}/IMGUI)
+target_include_directories(ImGui PUBLIC ${DEPENDS_DIR}/GLFW/include)
+target_link_libraries(${PROJECT_NAME} ImGui)
+
 target_link_libraries(${PROJECT_NAME} glm::glm)
-
-add_subdirectory(Animator)
-
-target_include_directories(${PROJECT_NAME} PRIVATE "Animator/include")
 target_include_directories(${PROJECT_NAME} PRIVATE ${DEPENDS_DIR}/GLAD/include)
 
 add_compile_options(/Zc:__cplusplus)
