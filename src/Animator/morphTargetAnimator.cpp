@@ -31,24 +31,37 @@ void MorphTargetAnimator::Init(const std::string& targetsFolderPath)
 	}
 }
 
-void MorphTargetAnimator::Update(int targetIndex)
+void MorphTargetAnimator::Update(float oldValue, int targetIndex, bool incrementing)
 {
 	Mesh& mesh = model.GetMeshes()[0];
 	std::vector<Vertex>& vertices = mesh.GetVertices();
 
 
-
-		//std::vector<Vertex>& targetVertices = targets[i].target.GetMeshes()[0].GetVertices();
+	//std::vector<Vertex>& targetVertices = targets[i].target.GetMeshes()[0].GetVertices();
 
 	for (int j = 0; j < targets[targetIndex].displacement.size(); j++)
 	{
-		vertices[j].Position = defaultModelVertices[j] + lerp(glm::vec3{ 0 }, targets[targetIndex].displacement[j], values[targetIndex]);
+		if (incrementing)
+		{
+			glm::vec3 displacementLerp = lerp(glm::vec3{ 0 }, targets[targetIndex].displacement[j], values[targetIndex])
+				- lerp(glm::vec3{ 0 }, targets[targetIndex].displacement[j], oldValue);
+
+			vertices[j].Position += displacementLerp;
+		}
+
+		else
+		{
+			glm::vec3 displacementLerp = lerp(targets[targetIndex].displacement[j], glm::vec3{0}, values[targetIndex])
+				- lerp(targets[targetIndex].displacement[j], glm::vec3{ 0 }, oldValue);
+
+			vertices[j].Position -= displacementLerp;
+		}
 	}
 
-		//for (int j = 0; j < vertices.size(); j++)
-		//{
-		//	vertices[j].Position = lerp(defaultModelVertices[j].Position, targetVertices[j].Position, values[i]);
-		//}
+	//for (int j = 0; j < vertices.size(); j++)
+	//{
+	//	vertices[j].Position = lerp(defaultModelVertices[j].Position, targetVertices[j].Position, values[i]);
+	//}
 }
 
 std::vector<float>& MorphTargetAnimator::GetValues()

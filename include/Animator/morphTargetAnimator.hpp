@@ -28,7 +28,7 @@ public:
 	MorphTargetAnimator(Model& defaultModel);
 	void Init(const std::string& targetsFolderPath);
 
-	void Update(int targetIndex);
+	void Update(float oldValue, int targetIndex, bool incrementing);
 
 	std::vector<float>& GetValues();
 	std::vector<Targets>& GetTargets();

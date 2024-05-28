@@ -5,9 +5,11 @@ class Blender
 {
 	MorphTargetAnimator* animator = nullptr;
 
+	std::vector<float> oldValues;
+
 public:
 
-	void Draw() const;
+	void Draw();
 
 	void SetAnimator(MorphTargetAnimator& pAnimator);
 };
