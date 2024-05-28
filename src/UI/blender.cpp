@@ -14,7 +14,10 @@ void Blender::Draw() const
 
 	for (int i = 0; i < targets.size(); i++)
 	{
-		ImGui::SliderFloat(targets[i].name.c_str(), &values[i], 0.0f, 1.0f);
+		if (ImGui::SliderFloat(targets[i].name.c_str(), &values[i], 0.0f, 1.0f))
+		{
+			animator->Update(i);
+		}
 	}
 
 	ImGui::End();
