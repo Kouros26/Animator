@@ -138,13 +138,12 @@ std::vector<Texture> Model::LoadMaterialTextures(const aiMaterial* mat, const ai
 {
     std::vector<Texture> textures;
     const std::string path = resourcePath +  "/../textures/" + name;
-    Texture texture(path);
+    const Texture texture(path);
 
-    if (!texture.GetValidity())
+    if (texture.GetValidity())
     {
-        texture = Texture("resources/textures/container.jpg");
+        textures.push_back(texture);
     }
-  
-    textures.push_back(texture);
+
     return textures;
 }
