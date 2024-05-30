@@ -28,7 +28,6 @@ void Application::Update()
 
 	ProcessInput(time.GetDeltaTime());
 
-	animator->Update();
 	renderer.Render(gameObjectManager.GetGameObjects(), gameObjectManager.GetMainCamera());
 
 	window.GetUIManager().Draw();
