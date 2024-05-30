@@ -23,6 +23,8 @@ public:
 	constexpr void AddPosition(const glm::vec3& delta);
 
 	constexpr void SetPosition(const glm::vec3& pPosition);
+
+	constexpr void SetScale(const glm::vec3& pScale);
 };
 
 constexpr glm::vec3 Transform::GetPosition() const
@@ -38,4 +40,9 @@ constexpr void Transform::AddPosition(const glm::vec3& delta)
 constexpr void Transform::SetPosition(const glm::vec3& pPosition)
 {
 	position = pPosition;
+}
+
+constexpr void Transform::SetScale(const glm::vec3& pScale)
+{
+	scale = pScale;
 }

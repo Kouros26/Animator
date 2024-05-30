@@ -5,7 +5,10 @@
 
 MorphTargetAnimator::MorphTargetAnimator(Model& defaultModel) : model(defaultModel), defaultModel(model)
 {
-	defaultModelVertices = defaultModel.GetMeshes()[0].GetVertices();
+	for (const auto& vertice : defaultModel.GetMeshes()[0].GetVertices())
+	{
+		defaultModelVertices.push_back(vertice.Position);
+	}
 }
 
 void MorphTargetAnimator::Init(const std::string& targetsFolderPath)
@@ -19,7 +22,7 @@ void MorphTargetAnimator::Init(const std::string& targetsFolderPath)
 		{
 			if (temporaryModel.GetMeshes()[0].GetVertices()[i].Position != defaultModel.GetMeshes()[0].GetVertices()[i].Position)
 			{
-				affectedVertices.insert(std::make_pair(i, temporaryModel.GetMeshes()[0].GetVertices()[i].Position));
+				affectedVertices.insert(std::make_pair(i, temporaryModel.GetMeshes()[0].GetVertices()[i].Position - defaultModel.GetMeshes()[0].GetVertices()[i].Position));
 			}
 		}
 
@@ -28,27 +31,28 @@ void MorphTargetAnimator::Init(const std::string& targetsFolderPath)
 	}
 }
 
-void MorphTargetAnimator::Update()
+void MorphTargetAnimator::Update(float oldValue, int targetIndex, bool incrementing)
 {
 	Mesh& mesh = model.GetMeshes()[0];
 	std::vector<Vertex>& vertices = mesh.GetVertices();
 
-	for (int i = 0; i < targets.size(); i++)
+	for (int j = 0; j < targets[targetIndex].displacement.size(); j++)
 	{
-		if (values[i] == 0.0f)
-			continue;
-
-		//std::vector<Vertex>& targetVertices = targets[i].target.GetMeshes()[0].GetVertices();
-
-		for (int j = 0; j < targets[i].target.size(); j++)
+		if (incrementing)
 		{
-			vertices[j].Position = lerp(defaultModelVertices[j].Position, targets[i].target[j], values[i]);
+			glm::vec3 displacementLerp = lerp(glm::vec3{ 0 }, targets[targetIndex].displacement[j], values[targetIndex])
+				- lerp(glm::vec3{ 0 }, targets[targetIndex].displacement[j], oldValue);
+
+			vertices[j].Position += displacementLerp;
 		}
 
-		//for (int j = 0; j < vertices.size(); j++)
-		//{
-		//	vertices[j].Position = lerp(defaultModelVertices[j].Position, targetVertices[j].Position, values[i]);
-		//}
+		else
+		{
+			glm::vec3 displacementLerp = lerp(targets[targetIndex].displacement[j], glm::vec3{0}, values[targetIndex])
+				- lerp(targets[targetIndex].displacement[j], glm::vec3{ 0 }, oldValue);
+
+			vertices[j].Position -= displacementLerp;
+		}
 	}
 }
 
