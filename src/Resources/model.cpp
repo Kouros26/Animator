@@ -144,7 +144,7 @@ std::vector<Texture> Model::LoadMaterialTextures(const aiMaterial* mat, const ai
     {
         texture = Texture("resources/textures/container.jpg");
     }
-
+  
     textures.push_back(texture);
     return textures;
 }

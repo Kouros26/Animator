@@ -36,9 +36,6 @@ void MorphTargetAnimator::Update(float oldValue, int targetIndex, bool increment
 	Mesh& mesh = model.GetMeshes()[0];
 	std::vector<Vertex>& vertices = mesh.GetVertices();
 
-
-	//std::vector<Vertex>& targetVertices = targets[i].target.GetMeshes()[0].GetVertices();
-
 	for (int j = 0; j < targets[targetIndex].displacement.size(); j++)
 	{
 		if (incrementing)
@@ -57,11 +54,6 @@ void MorphTargetAnimator::Update(float oldValue, int targetIndex, bool increment
 			vertices[j].Position -= displacementLerp;
 		}
 	}
-
-	//for (int j = 0; j < vertices.size(); j++)
-	//{
-	//	vertices[j].Position = lerp(defaultModelVertices[j].Position, targetVertices[j].Position, values[i]);
-	//}
 }
 
 std::vector<float>& MorphTargetAnimator::GetValues()

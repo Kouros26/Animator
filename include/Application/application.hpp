@@ -14,6 +14,8 @@ class Application
 	Renderer renderer{ gameObjectManager.GetMainCamera() };
 	Time time;
 
+	MorphTargetAnimator* animator {nullptr};
+
 public:
 
 	Application();
