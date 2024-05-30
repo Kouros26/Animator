@@ -10,7 +10,7 @@ class Application
 	Window window{};
 
 	GameObjectManager gameObjectManager{};
-	MorphTargetAnimator* animator;
+
 	Renderer renderer{ gameObjectManager.GetMainCamera() };
 	Time time;
 
