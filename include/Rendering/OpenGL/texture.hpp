@@ -9,6 +9,8 @@ public:
 
 	[[nodiscard]] constexpr std::string GetName() const;
 	[[nodiscard]] constexpr unsigned GetId() const;
+	[[nodiscard]] constexpr bool GetValidity() const;
+
 private:
 
 	std::string name;
@@ -26,4 +28,9 @@ constexpr std::string Texture::GetName() const
 constexpr unsigned Texture::GetId() const
 {
 	return Id;
+}
+
+constexpr bool Texture::GetValidity() const
+{
+	return valid;
 }

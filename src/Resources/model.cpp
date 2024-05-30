@@ -127,18 +127,23 @@ Mesh Model::ProcessMesh(const aiMesh* mesh, const aiScene* scene)
     // normal: texture_normalN
 
 	// 1. diffuse maps
-    std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "bob.png");
+    std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "diffuse.png");
     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
     // return a mesh object created from the extracted mesh data
     return { vertices, indices, textures };
 }
 
-std::vector<Texture> Model::LoadMaterialTextures(const aiMaterial* mat, const aiTextureType type, const std::string& name)
+std::vector<Texture> Model::LoadMaterialTextures(const aiMaterial* mat, const aiTextureType type, const std::string& name) const
 {
     std::vector<Texture> textures;
-    std::string path = "resources/textures/" + name;
+    const std::string path = resourcePath +  "/../textures/" + name;
     Texture texture(path);
+
+    if (!texture.GetValidity())
+    {
+        texture = Texture("resources/textures/container.jpg");
+    }
 
     textures.push_back(texture);
     return textures;

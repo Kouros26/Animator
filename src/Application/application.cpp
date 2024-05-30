@@ -6,9 +6,9 @@
 
 Application::Application()
 {
-	GameObject& obj = gameObjectManager.CreateGameObject("bob", "resources/models/default.fbx");
+	GameObject& obj = gameObjectManager.CreateGameObject("bob", "resources/models/Gunan/Head/default.fbx");
 	animator = new MorphTargetAnimator(obj.GetModel());
-	animator->Init("resources/models/Gunan/");
+	animator->Init("resources/models/GunanAnims/");
 	window.GetUIManager().SetAnimator(*animator);
 }
 
