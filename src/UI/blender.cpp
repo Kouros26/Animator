@@ -16,7 +16,7 @@ void Blender::Draw()
 	{
 		if (ImGui::SliderFloat(targets[i].name.c_str(), &values[i], 0.0f, 1.0f))
 		{
-			animator->Update(oldValues[i], i, values[i] > oldValues[i]);
+			animator->Update(oldValues[i], i);
 		}
 	}
 

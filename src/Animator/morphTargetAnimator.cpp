@@ -31,14 +31,14 @@ void MorphTargetAnimator::Init(const std::string& targetsFolderPath)
 	}
 }
 
-void MorphTargetAnimator::Update(float oldValue, int targetIndex, bool incrementing)
+void MorphTargetAnimator::Update(float oldValue, int targetIndex)
 {
 	Mesh& mesh = model.GetMeshes()[0];
 	std::vector<Vertex>& vertices = mesh.GetVertices();
 
 	for (int j = 0; j < targets[targetIndex].displacement.size(); j++)
 	{
-		if (incrementing)
+		if (values[targetIndex] > oldValue)
 		{
 			glm::vec3 displacementLerp = lerp(glm::vec3{ 0 }, targets[targetIndex].displacement[j], values[targetIndex])
 				- lerp(glm::vec3{ 0 }, targets[targetIndex].displacement[j], oldValue);

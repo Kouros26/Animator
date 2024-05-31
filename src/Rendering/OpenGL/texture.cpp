@@ -31,10 +31,7 @@ Texture::Texture(const std::string& pFilePath)
         glGenerateMipmap(GL_TEXTURE_2D);
         valid = true;
     }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
+
     stbi_image_free(data);
 }
 
