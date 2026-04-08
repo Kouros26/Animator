@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.23 FATAL_ERROR)
+cmake_minimum_required(VERSION 4.0 FATAL_ERROR)
 
 include(FetchContent)
 
@@ -10,7 +10,6 @@ set(SOURCE_FOLDER src)
 set(INCLUDE_FOLDER include)
 set(DEPENDS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/dependencies)
 add_definitions(-DPROJECT_PATH="${CMAKE_CURRENT_SOURCE_DIR}/")
-
 
 project(${PROJECT_NAME} LANGUAGES CXX)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
@@ -60,6 +59,24 @@ target_link_libraries(${PROJECT_NAME} glfw)
 #Adding ASSIMP
 add_subdirectory(${DEPENDS_DIR}/ASSIMP)
 target_link_libraries(${PROJECT_NAME} assimp)
+
+#Adding BULLET
+set(BUILD_BULLET2_DEMOS OFF CACHE BOOL "" FORCE)
+set(BUILD_CPU_DEMOS OFF CACHE BOOL "" FORCE)
+set(BUILD_UNIT_TESTS OFF CACHE BOOL "" FORCE)
+set(BUILD_EXTRAS OFF CACHE BOOL "" FORCE)
+set(BUILD_OPENGL3_DEMOS OFF CACHE BOOL "" FORCE)
+
+add_subdirectory(${DEPENDS_DIR}/BULLET)
+
+target_link_libraries(${PROJECT_NAME}
+    BulletDynamics
+    BulletCollision
+    LinearMath
+    BulletSoftBody
+)
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${DEPENDS_DIR}/BULLET/src)
 
 #Adding GLM
 FetchContent_Declare(

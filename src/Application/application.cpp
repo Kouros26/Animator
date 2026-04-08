@@ -6,11 +6,8 @@
 
 Application::Application()
 {
-	GameObject& obj = gameObjectManager.CreateGameObject("bob", "resources/models/Gunan/Head/default.fbx");
-	obj.GetTransform().SetPosition({ 50, 0, -300 });
-	animator = new MorphTargetAnimator(obj.GetModel());
-	animator->Init("resources/models/GunanAnims/");
-	window.GetUIManager().SetAnimator(*animator);
+	CreateObjects();
+	AddComponents();
 }
 
 Application::~Application()
@@ -45,6 +42,24 @@ bool Application::ShouldClose() const
 	return window.ShouldClose();
 }
 
+void Application::CreateObjects()
+{
+	GameObject& obj = gameObjectManager.CreateGameObject("bob", "resources/models/Gunan/Head/default.fbx", "resources/models/Gunan/Head/textures/diffuse.png");
+	obj.GetTransform().SetPosition({ 50, 0, -300 });
+
+	GameObject& ground = gameObjectManager.CreateGameObject("ground", "resources/models/cube.obj");
+	ground.GetTransform().SetPosition({ 0, -100, -300 });
+	ground.GetTransform().SetScale({ 200, 1, 200 });
+}
+
+void Application::AddComponents()
+{
+	animator = new MorphTargetAnimator(gameObjectManager.GetGameObjects()[0].GetModel());
+	animator->Init("resources/models/GunanAnims/");
+	window.GetUIManager().SetAnimator(*animator);
+	window.GetUIManager().SetRenderer(renderer);
+}
+
 void Application::ProcessInput(const double& deltaTime)
 {
 	GLFWwindow* windowRef = window.GetWindow();
@@ -52,8 +67,8 @@ void Application::ProcessInput(const double& deltaTime)
 	if (glfwGetKey(windowRef, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(windowRef, true);
 
-	if (glfwGetKey(windowRef, GLFW_KEY_MINUS) == GLFW_PRESS)
-		renderer.ToggleWireFrame();
+	//if (glfwGetKey(windowRef, GLFW_KEY_MINUS) == GLFW_PRESS)
+	//	renderer.ToggleWireFrame();
 
 	if (glfwGetKey(windowRef, GLFW_KEY_W) == GLFW_PRESS)
 		gameObjectManager.GetMainCamera().GetTransform().AddPosition(glm::vec3{ 0, 0, 100 } *= deltaTime);

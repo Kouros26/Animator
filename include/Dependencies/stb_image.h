@@ -2,7 +2,8 @@
                                   no warranty implied; use at your own risk
 
    Do this:
-      #define STB_IMAGE_IMPLEMENTATION
+      
+      STB_IMAGE_IMPLEMENTATION
    before you include this file in *one* C or C++ file to create the implementation.
 
    // i.e. it should look like this:

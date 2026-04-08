@@ -17,6 +17,13 @@ Model::Model(const std::string& pPath)
 	LoadModel();
 }
 
+Model::Model(const std::string& pPath, const std::string& pTexturePath)
+    : IResource(pPath)
+{
+    LoadModel();
+    LoadTexture(pTexturePath);
+}
+
 void Model::Draw(const unsigned shaderProgram) const
 {
     for (const auto& mesh : meshes)
@@ -25,12 +32,26 @@ void Model::Draw(const unsigned shaderProgram) const
     }
 }
 
+void Model::AddMesh(const std::string& pPath)
+{
+    resourcePath = pPath;
+
+    LoadModel();
+}
+
+void Model::AddMesh(const std::string& pPath, const std::string& pTexturePath)
+{
+    resourcePath = pPath;
+
+    LoadModel(pTexturePath);
+}
+
 std::vector<Mesh>& Model::GetMeshes()
 {
     return meshes;
 }
 
-void Model::LoadModel()
+void Model::LoadModel(const std::string& pTexturePath)
 {
     Assimp::Importer import;
     const aiScene * scene = import.ReadFile(PROJECT_PATH + resourcePath, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
@@ -41,25 +62,25 @@ void Model::LoadModel()
         return;
     }
 
-    ProcessNode(scene->mRootNode, scene);
+    ProcessNode(scene->mRootNode, scene, pTexturePath);
 }
 
-void Model::ProcessNode(const aiNode* node, const aiScene* scene)
+void Model::ProcessNode(const aiNode* node, const aiScene* scene, const std::string& pPath)
 {
     // process all the node's meshes (if any)
     for (unsigned int i = 0; i < node->mNumMeshes; i++)
     {
 	    const aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        meshes.push_back(ProcessMesh(mesh, scene));
+        meshes.push_back(ProcessMesh(mesh, scene, pPath));
     }
     // then do the same for each of its children
     for (unsigned int i = 0; i < node->mNumChildren; i++)
     {
-        ProcessNode(node->mChildren[i], scene);
+        ProcessNode(node->mChildren[i], scene, pPath);
     }
 }
 
-Mesh Model::ProcessMesh(const aiMesh* mesh, const aiScene* scene)
+Mesh Model::ProcessMesh(const aiMesh* mesh, const aiScene* scene, const std::string& pPath)
 {
     // data to fill
     std::vector<Vertex> vertices;
@@ -119,18 +140,14 @@ Mesh Model::ProcessMesh(const aiMesh* mesh, const aiScene* scene)
     }
     
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-    // we assume a convention for sampler names in the shaders. Each diffuse texture should be named
-    // as 'texture_diffuseN' where N is a sequential number ranging from 1 to MAX_SAMPLER_NUMBER. 
-    // Same applies to other texture as the following list summarizes:
-    // diffuse: texture_diffuseN
-    // specular: texture_specularN
-    // normal: texture_normalN
 
-	// 1. diffuse maps
-    std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "diffuse.png");
-    textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+    Texture texture(pPath == "" ? "resources/textures/container.jpg" : pPath);
 
-    // return a mesh object created from the extracted mesh data
+    if (texture.GetValidity())
+    {
+        textures.push_back(texture);
+    }
+
     return { vertices, indices, textures };
 }
 
@@ -146,4 +163,20 @@ std::vector<Texture> Model::LoadMaterialTextures(const aiMaterial* mat, const ai
     }
 
     return textures;
+}
+
+void Model::LoadTexture(const std::string& path)
+{
+    Texture texture(path);
+
+    if (!texture.GetValidity())
+        return;
+
+    std::vector<Texture> textures;
+    textures.push_back(texture);
+
+    for (auto& mesh : meshes)
+    {
+        mesh.SetTextures(textures);
+    }
 }

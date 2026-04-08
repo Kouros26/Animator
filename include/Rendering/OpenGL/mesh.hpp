@@ -27,6 +27,8 @@ public:
 
     void UpdateMesh() const;
 
+    void SetTextures(const std::vector<Texture> pTextures);
+
     std::vector<Vertex>& GetVertices();
 
 private:

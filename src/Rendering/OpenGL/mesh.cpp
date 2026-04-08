@@ -106,3 +106,9 @@ void Mesh::SetupMesh()
     //glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_Weights));
     //glBindVertexArray(0);
 }
+
+void Mesh::SetTextures(const std::vector<Texture> pTextures)
+{
+    textures = pTextures;
+    UpdateMesh();
+}

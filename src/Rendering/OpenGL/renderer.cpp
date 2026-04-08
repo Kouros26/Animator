@@ -16,6 +16,7 @@ Renderer::Renderer(const Camera& camera)
 	LinkAttributes();
 	SetupCamera(camera);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 }
 
 Renderer::~Renderer()

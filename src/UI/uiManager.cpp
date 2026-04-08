@@ -21,10 +21,16 @@ UIManager::UIManager(GLFWwindow* window)
 
 void UIManager::Draw()
 {
+	renderingSettings.Draw();
 	blender.Draw();
 }
 
 void UIManager::SetAnimator(MorphTargetAnimator& pAnimator)
 {
 	blender.SetAnimator(pAnimator);
+}
+
+void UIManager::SetRenderer(Renderer& pRendering)
+{
+	renderingSettings.SetRenderer(pRendering);
 }

@@ -10,15 +10,15 @@ GameObject::GameObject(const std::string& pName)
 }
 
 GameObject::GameObject(const std::string& pName, const std::string& pPath)
+	: GameObject(pName)
 {
 	model = Model(pPath);
-	objectCount++;
 }
 
 GameObject::GameObject(const std::string& pName, const std::string& pPath, const std::string& pTexturePath)
-	: GameObject(pName, pPath)
+	: GameObject(pName)
 {
-	
+	model = Model(pPath, pTexturePath);
 }
 
 Transform& GameObject::GetTransform()

@@ -12,9 +12,9 @@ public:
 
 	GameObjectManager();
 
-    constexpr GameObject& CreateGameObject(const std::string& pName);
-    constexpr GameObject& CreateGameObject(const std::string& pName, const std::string& pPath);
-    constexpr GameObject& CreateGameObject(const std::string& pName, const std::string& pPath, const std::string& pTexturePath);
+    GameObject& CreateGameObject(const std::string& pName);
+    GameObject& CreateGameObject(const std::string& pName, const std::string& pPath);
+    GameObject& CreateGameObject(const std::string& pName, const std::string& pPath, const std::string& pTexturePath);
    
     constexpr std::vector<GameObject>& GetGameObjects();
     constexpr Camera& GetMainCamera() const;
@@ -26,31 +26,12 @@ private:
 	Camera* mainCamera = nullptr;
 };
 
-constexpr GameObject& GameObjectManager::CreateGameObject(const std::string& pName)
-{
-	gameObjects.emplace_back(pName);
-	return gameObjects[gameObjects.size() - 1];
-}
-
-constexpr GameObject& GameObjectManager::CreateGameObject(const std::string& pName, const std::string& pPath)
-{
-	gameObjects.emplace_back(pName, pPath);
-	return gameObjects[gameObjects.size() - 1];
-}
-
-constexpr GameObject& GameObjectManager::CreateGameObject(const std::string& pName, const std::string& pPath,
-	const std::string& pTexturePath)
-{
-	gameObjects.emplace_back(pName, pPath);
-	return gameObjects[gameObjects.size() - 1];
-}
-
-constexpr std::vector<GameObject>& GameObjectManager::GetGameObjects()
+inline constexpr std::vector<GameObject>& GameObjectManager::GetGameObjects()
 {
 	return gameObjects;
 }
 
-constexpr Camera& GameObjectManager::GetMainCamera() const
+inline constexpr Camera& GameObjectManager::GetMainCamera() const
 {
 	return *mainCamera;
 }

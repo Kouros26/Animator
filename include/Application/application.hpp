@@ -4,6 +4,7 @@
 #include "window.hpp"
 #include "EngineObjects/gameObjectManager.hpp"
 #include "Animator/morphTargetAnimator.hpp"
+#include <Physics/physicsWorld.hpp>
 
 class Application
 {
@@ -12,21 +13,25 @@ class Application
 	GameObjectManager gameObjectManager{};
 
 	Renderer renderer{ gameObjectManager.GetMainCamera() };
+	PhysicsWorld physics{};
+
 	Time time;
 
-	MorphTargetAnimator* animator {nullptr};
+	MorphTargetAnimator* animator = nullptr;
 
 public:
 
 	Application();
 	~Application();
-	void Test();
 
 	void Update();
 
 	[[nodiscard]] bool ShouldClose() const;
 
 private:
+
+	void CreateObjects();
+	void AddComponents();
 
 	void ProcessInput(const double& deltaTime);
 };
